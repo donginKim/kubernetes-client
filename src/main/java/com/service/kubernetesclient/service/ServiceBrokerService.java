@@ -88,62 +88,6 @@ public class ServiceBrokerService{
 
     }
 
-    public V1Deployment provisionResult1(String instance_id, Provision provision) throws IOException, ApiException {
-        V1Deployment deployment = new V1Deployment();
-        try{
-            Config.defaultClient();
-
-            AppsV1Api api = new AppsV1Api();
-
-            V1ObjectMeta objectMeta = new V1ObjectMeta();
-            V1LabelSelector labelSelector = new V1LabelSelector();
-            V1PodTemplateSpec podTemplateSpec = new V1PodTemplateSpec();
-            V1PodSpec podSpec = new V1PodSpec();
-            List<V1Container> containers = new ArrayList<V1Container>();
-            List<V1ContainerPort> containerPorts = new ArrayList<V1ContainerPort>();
-            V1Container container = new V1Container();
-            V1ContainerPort port = new V1ContainerPort();
-            V1DeploymentSpec deploymentSpec = new V1DeploymentSpec();
-
-            port.setContainerPort(80);
-            containerPorts.add(port);
-
-            container.setName("nginx");
-            container.setImage("nginx:1.14.2");
-            container.setPorts(containerPorts);
-
-            containers.add(container);
-
-            podSpec.setContainers(containers);
-
-            Map<String, String> labels = new HashMap<>();
-            labels.put("app", "nginx");
-
-            labelSelector.setMatchLabels(labels);
-
-            objectMeta.setName("nginx-deployment");
-            objectMeta.setLabels(labels);
-            podTemplateSpec.setSpec(podSpec);
-            deploymentSpec.setReplicas(3);
-            deploymentSpec.setSelector(labelSelector);
-            deploymentSpec.setTemplate(podTemplateSpec);
-
-            deployment.setApiVersion("v1");
-            deployment.setKind("Deployment");
-            deployment.setMetadata(objectMeta);
-            deployment.setSpec(deploymentSpec);
-
-            api.createNamespacedDeployment("default", deployment, null, null, null);
-
-            return deployment;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return deployment;
-
-    }
-
     public Catalog catalog(){
         String[] tags_1 = {"no-sql", "relational"};
 
