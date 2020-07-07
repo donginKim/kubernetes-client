@@ -3,10 +3,8 @@ package com.service.kubernetesclient.service;
 
 import com.service.kubernetesclient.dto.*;
 import io.kubernetes.client.openapi.ApiClient;
-import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.AppsV1Api;
-import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.Config;
 import org.jose4j.json.internal.json_simple.JSONArray;
@@ -14,7 +12,6 @@ import org.jose4j.json.internal.json_simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +33,7 @@ public class ServiceBrokerService{
         return client;
     }
 
-
-    public void provisionResult(String instance_id) throws IOException, ApiException {
+    public void provisionResult(String instance_id) throws Exception {
         customApiClient(instance_id);
         AppsV1Api api = new AppsV1Api();
 
